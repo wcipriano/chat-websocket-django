@@ -11,3 +11,7 @@ POC for testing the Websocket Python and Django
 remove **daphne** dependency
 
 
+
+
+## Add users to database
+
