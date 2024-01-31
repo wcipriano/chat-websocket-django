@@ -6,3 +6,8 @@ POC for testing the Websocket Python and Django
 
 
 
+## @TODO:
+
+remove **daphne** dependency
+
+

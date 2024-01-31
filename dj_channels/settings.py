@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-#77u&*l#-35x%#7v16sqj_c^p^#95$-=s$^d8#qvgcle_=k)$a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['localhost', 'https://chat-websocket-django.onrender.com']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
+print('ALLOWED_HOSTS          :', ALLOWED_HOSTS)
 
 
 # Application definition
