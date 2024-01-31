@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 import dj_database_url
 from decouple import config
@@ -133,7 +134,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = config('STATIC_ROOT', os.path.join(BASE_DIR, "static_files"), cast=str)
+STATICFILES_DIRS = (
+  os.path.join(BASE_DIR, 'static/'),
+)
+MEDIA_ROOT = config('MEDIA_ROOT', os.path.join(BASE_DIR, "static_media"), cast=str)
+STATIC_URL = "static/"
+MEDIA_URL = "media/"
+print("BASE_DIR:         ", BASE_DIR)
+print("STATIC_ROOT:      ", STATIC_ROOT)
+print("STATIC_URL:       ", STATIC_URL)
+print("STATICFILES_DIRS: ", STATICFILES_DIRS)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
