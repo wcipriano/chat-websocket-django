@@ -8,7 +8,9 @@ POC for testing the Websocket Python and Django
 
 ## @TODO:
 - Use render.yaml for Deploys: [Link](https://docs.render.com/deploy-django#use-renderyaml-for-deploys)
-
+- **Setup Readme**: Montar setup do projeto no readme
+- Change `channels.layers.InMemoryChannelLayer` to `channels_redis.core.RedisChannelLayer`
+- 
 
 ## REFs
 
@@ -31,4 +33,29 @@ POC for testing the Websocket Python and Django
 - StackOverflow: Django - Static file not found: [link](https://stackoverflow.com/questions/6014663/django-static-file-not-found)
 - Django Static Files and Templates: [link](https://learndjango.com/tutorials/django-static-files-and-templates)
 - WhiteNoise is an easy way to serve static files: [link](https://whitenoise.readthedocs.io/en/latest/)
-- 
+- a
+
+
+
+# @TODO Implementação UaiAds 
+
+1. **Teste desacoplado WS/Http** ✅
+
+   Criar view que recebe uma requisição via http e enviar uma mensagem para uma sala via websocket:
+   - /chat/<str:room_name>/send-test/
+
+2. **POC**:
+
+   Inserir POC no projeto UAIAds (teste websocket funcionando)
+
+3. **Teste timeout** - Cliente não responde.  ✅
+
+   Após estabelecida a conn WS, se o server perde a conexão com o client, existe um timeout no componente channels que remove os "clientes isolados" automaticamete.
+   Assim evita que continue tentando enviar novas mensagens para os mesmos
+ 
+4. Ideias implementação pagamento:
+ - Nomenclatura do grupo `"pagamento_<id_pgto>"`
+   Usuários que estiverem acompanhando este pagamento entram neste grupo (poode ser mais de um, mas isso é transparente para o server)
+
+5. 
+

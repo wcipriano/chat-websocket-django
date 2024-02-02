@@ -38,6 +38,10 @@
             <button class="btn btn-success" id="chatMessageSend" type="button">Send</button>
           </div>
         </div>
+        <div class=" mt-4">
+            <a href="/chat/{{ room.name }}/send-test/">Click here</a> to send a test message: <br/>
+            Request http to the server, and the server send a message from websocket to the group "room_{{ room.name }}".
+        </div>
       </div>
       <div class="col-12 col-md-4">
         <label for="onlineUsers">Online users</label>
