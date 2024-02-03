@@ -4,11 +4,49 @@ Chat application using Websocket with Django + Channels
 
 POC for testing the Websocket Python and Django 
 
+## Development Setup
+
+1. Clone
+   `git clone git@github.com:wcipriano/chat-websocket-django.git`
+2. Open folder
+   `cd chat-websocket-django`
+3. Create python virtual env:
+   `python3.9 -m venv .venv`
+4. Activate venv
+   `source ./.venv/bin/activate`
+5. Install libraries
+   `pip install -r requirements.txt`
+6. Create file `.env` into root dir `vim .env`
+   ```
+   DEBUG=True
+   ALLOWED_HOSTS=127.0.0.1,localhost,0.0.0.0
+   SECRET_KEY=9b28on)#g5&dxdi*pc7gwiw4ep1-b(m(zza!kq#@z*s2%(s7p=
+   RENDER_EXTERNAL_HOSTNAME=
+   DATABASE_URL=
+   ```
+   Without "DATABASE_URL" param it will create a "db.sqlite3" DB in the root dir
+   RENDER_EXTERNAL_HOSTNAME it needed only in test or production env
+
+7. Run script build 
+   `./build.sh`
+
+8. Create django super user
+   `python manage.py createsuperuser`
+
+9. Run command to start application
+
+`daphne --port 8000 --bind 0.0.0.0 dj_channels.asgi:application` or
+`python manage.py runserver localhost:8000`
+
+10. Open App in the browser and have fun   \o/ \o/ \o/
+http://localhost:8000/chat/sala1/
+
+11. 
+
 
 
 ## @TODO:
 - Use render.yaml for Deploys: [Link](https://docs.render.com/deploy-django#use-renderyaml-for-deploys)
-- **Setup Readme**: Montar setup do projeto no readme
 - Change `channels.layers.InMemoryChannelLayer` to `channels_redis.core.RedisChannelLayer`
 - 
 
