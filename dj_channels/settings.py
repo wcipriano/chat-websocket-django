@@ -30,7 +30,7 @@ DEBUG = config('DEBUG', False, cast=bool)
 
 # ALLOWED_HOSTS = ['localhost', 'https://chat-websocket-django.onrender.com']
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
-RENDER_EXTERNAL_HOSTNAME = config('RENDER_EXTERNAL_HOSTNAME')
+RENDER_EXTERNAL_HOSTNAME = config('RENDER_EXTERNAL_HOSTNAME', '')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 print('ALLOWED_HOSTS          :', ALLOWED_HOSTS)
@@ -86,21 +86,21 @@ ASGI_APPLICATION = 'dj_channels.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
-DATABASE_URL = config("DATABASE_URL", 'DATABASE_URL-env-var-not-found')
-print('DATABASE_URL:: ', DATABASE_URL, '\n\n\n')
-
-DATABASES = {
+db_url = None
+if config('DATABASE_URL', '', cast=str):
+    DATABASE_URL = config("DATABASE_URL")
+    print('DATABASE_URL:: ', DATABASE_URL, '\n\n')
+    DATABASES = {
         "default": dj_database_url.parse(DATABASE_URL)
-}
-
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    print('DATABASE_ENGINE:: ', 'django.db.backends.sqlite3\n\n')
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -141,24 +141,22 @@ USE_TZ = True
 STATICFILES_DIRS = (
   os.path.join(BASE_DIR, 'static/'),
 )
+# Tell Django to copy statics to the `staticfiles` directory in your application directory
+STATIC_ROOT = config('STATIC_ROOT', os.path.join(BASE_DIR, "static_files"), cast=str)
 MEDIA_ROOT = config('MEDIA_ROOT', os.path.join(BASE_DIR, "static_media"), cast=str)
 STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
 
 print("BASE_DIR:         ", BASE_DIR)
+print("STATIC_ROOT:           ", STATIC_ROOT)
 print("STATIC_URL:       ", STATIC_URL)
 print("STATICFILES_DIRS: ", STATICFILES_DIRS)
 
 # Following settings only make sense on production and may break development environments.
 if not DEBUG:
-    # Tell Django to copy statics to the `staticfiles` directory in your application directory on Render.
-    STATIC_ROOT = config('STATIC_ROOT', os.path.join(BASE_DIR, "static_files"), cast=str)
-
     # Turn on WhiteNoise storage backend that takes care of compressing static files
     # and creating unique names for each version so they can safely be cached forever.
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-    print("STATIC_ROOT:           ", STATIC_ROOT)
     print("STATICFILES_STORAGE:   ", STATICFILES_STORAGE)
 
 # Default primary key field type
